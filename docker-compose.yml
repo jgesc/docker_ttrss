@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  frontend:
+    build: .
+    ports:
+      - "443:443"
+    volumes:
+      - ./persist/html/:/var/www/html/
+      - ./persist/ssl/:/etc/apache2/ssl/
+    image: ttrss:frontend
+    links:
+      - "mysql:db"
+  mysql:
+    image: ttrss:mysql
+    hostname: mysql
+    volumes:
+      - type: bind
+        source: ./persist/mysql
+        target: /var/lib/mysql/
+    env_file:
+      - config/mysql-variables.env
