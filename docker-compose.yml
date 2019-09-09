@@ -9,6 +9,8 @@ services:
       - ./persist/html/:/var/www/html/
       - ./persist/ssl/:/etc/apache2/ssl/
     image: ttrss:frontend
+    depends_on:
+      - mysql
     links:
       - "mysql:db"
   mysql:
